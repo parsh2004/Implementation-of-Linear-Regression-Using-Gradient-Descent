@@ -1,90 +1,90 @@
-# Implementation-of-Linear-Regression-Using-Gradient-Descent
+# Implementation of Simple Linear Regression Model for Predicting the Marks Scored
 
-## AIM:
-To write a program to implement the linear regression using gradient descent.
+# AIM:
+To write a program to predict the marks scored by a student using the simple linear regression model.
 
-## Equipments Required:
+# EQUIPMENTS REQUIRED:
 1. Hardware – PCs
-2. Anaconda – Python 3.7 Installation / Moodle-Code Runner
+2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
-## Algorithm
-1. Import the standard libraries in python required for finding Gradient Design.
-2. Read the dataset file and check any null value using .isnull() method.
-3. Declare the default variables with respective values for linear regression.
-4. Calculate the loss using Mean Square Error.
-5. Predict the value of y.
-6. Plot the graph respect to hours and scores using .scatterplot() method for Linear Regression.
-7. Plot the graph respect to loss and iterations using .plot() method for Gradient Descent.
+# ALGORITHM:
+1. Import the standard Libraries.
+2. Set variables for assigning dataset values.
+3. Import linear regression from sklearn.
+4. Assign the points for representing in the graph
+5. Predict the regression for marks by using the representation of the graph.
+6. Compare the graphs and hence we obtained the linear regression for the given datas.
 
-## Program:
+# PROGRAM:
+```
+/*
+Program to implement the simple linear regression model for predicting the marks scored.
+Developed by: Parshwanath M
+RegisterNumber: 212221230073 
+*/
 ```
 
-Program to implement the linear regression using gradient descent.
-Developed by:M Parshanath
-RegisterNumber: 212221230073 
-
+```
+# implement a simple regression model for predicting the marks scored by the students
 
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
+dataset=pd.read_csv('/content/student_scores.csv')
+print(dataset)
+
+# assigning hours to X & Scores to Y
+X=dataset.iloc[:,:1].values
+Y=dataset.iloc[:,1].values
+print(X)
+print(Y)
+
+from sklearn.model_selection import train_test_split
+X_train,X_test,Y_train,Y_test=train_test_split(X,Y,test_size=1/3,random_state=0)
+
 from sklearn.linear_model import LinearRegression
-df=pd.read_csv('student_scores - student_scores.csv')
-df.head()
-df.tail()
+reg=LinearRegression()
+reg.fit(X_train,Y_train)
 
-#checking for null values in dataset
-df.isnull().sum()
+Y_pred=reg.predict(X_test)
+import matplotlib.pyplot as plt
+from sklearn.metrics import mean_absolute_error,mean_squared_error
 
-#To calculate Gradient decent and Linear Descent
-x=df.Hours
-x.head()
-
-y=df.Scores
-y.head()
-
-n=len(x)
-m=0
-c=0
-L=0.001
-loss=[]
-for i in range(10000):
-    ypred = m*x + c
-    MSE = (1/n) * sum((ypred - y)*2)
-    dm = (2/n) * sum(x*(ypred-y))
-    dc = (2/n) * sum(ypred-y)
-    c = c-L*dc
-    m = m-L*dm
-    loss.append(MSE)
-print(m,c)
-
-#plotting Linear Regression graph
-y_pred=m*x+c
-plt.scatter(x,y,color="violet")
-plt.plot(x,y_pred,color="purple")
-plt.xlabel("Study Hours")
+plt.scatter(X_train,Y_train,color='green')
+plt.plot(X_train,reg.predict(X_train),color='red')
+plt.title('Training set (H vs S)')
+plt.xlabel("Hours")
 plt.ylabel("Scores")
-plt.title("Study hours vs Scores")
+plt.show
+
+plt.scatter(X_test,Y_test,color='purple')
+plt.plot(X_test,reg.predict(X_test),color='blue')
+plt.title('Test set(H vs S)')
+plt.xlabel("Hours")
+plt.ylabel("Scores")
 plt.show()
 
-#plotting Gradient Descent graph
-plt.plot(loss, color="skyblue")
-plt.xlabel("Iterations")
-plt.ylabel("Loss")
-plt.show()
+mse=mean_squared_error(Y_test,Y_pred)
+print('MSE = ',mse)
+
+mae=mean_absolute_error(Y_test,Y_pred)
+print('MAE = ',mae)
+
+rmse=np.sqrt(mse)
+print("RMSE = ",rmse)
 ```
-## Output:
-## Contents in the data file (head, tail):
-![Output1](01.png)![Output1](02.png)
 
-## Checking for null values in the dataset:
+# OUTPUT:
+![output](o1.png)
 
-![Output1](2.png)
+![output](o2.png)
 
-## Linear Regression Graph:
-![Output1](3.png)
+![output](o3.png)
 
-## Gradient Descent Graph:
-![Output1](4.png)
+![output](o4.png)
 
-## Result:
-Thus the program to implement the linear regression using gradient descent is written and verified using python programming.
+![output](o5.png)
+
+![output](o6.png)
+
+# RESULT:
+Thus the program to implement the simple linear regression model for predicting the marks scored is written and verified using python programming.
